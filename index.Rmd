@@ -1,0 +1,52 @@
+---
+title: "BMI calculator"
+author: "asandmeyer"
+date: "19 2 2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Summary and purpose
+
+This presentation is done as an assignment for the Coursera R course "Developing Data Products".
+
+I decided to create a body mass index (BMI) calculator which returns the BMI. Here, the user can type in their height and weigth and the BMI is returned. Moreover, the application tells the user whether his/her BMI is healthy and what the ideal weigth at his/her given heigth is supposed to be.
+
+Technically, the shiny app is build up of two parts: the `ui.R` (frontend) and `server.R` (backend) file.
+
+## Calculation of the BMI
+
+This is an example with a given height and weigth how the BMI is calculated.
+
+```{r, echo=TRUE}
+numeric_kg <- 65
+numeric_m <- 1.75
+BMI_value <- numeric_kg / (numeric_m * numeric_m)
+round(BMI_value, digits = 2)
+```
+
+The output `r round(BMI_value, digits = 2)` will be displayed on the application.
+
+## BMI category
+
+Here, the classification of the BMI is done by the following code example. Therefore, we get from our example from the previous slide:
+
+```{r, echo=TRUE}
+if (BMI_value <= 18.5){print("underweigth")
+} else if (BMI_value <= 25){print("healthy weigth")
+} else if (BMI_value <= 30) {print("overweigth")
+} else {print("obese")}
+```
+
+## BMI normal healthy weigth
+
+If the BMI is between `18.5` and `25`, the person is considered to have a healthy normal weight. With the last code part, we want to return to the app user his/her ideal healthy weight by the given `numeric_m`. Therefore, we calculate the range.
+
+```{r, echo=TRUE}
+min <- 18.5*(numeric_m * numeric_m) #minimum value
+max <- 25*(numeric_m * numeric_m) #maximum value
+paste(min, "kg to ", max, "kg")
+```
